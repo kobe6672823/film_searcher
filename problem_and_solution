@@ -31,3 +31,15 @@ problem:
 solution:
     str---->unicode:  str.decode()
     unicode---->str:  unicode.encode()
+
+-----------------------------------------------
+time:  2013/4/9
+problem:
+    sql = "insert into imdb_info(imdb_num, rank, rating, title, votes) values(%s,%d,%f,%s,%s)"
+    param = (item[4], item[0], item[1], item[2], item[3])
+    cursor.execute(sql, param)
+    这样写会出现type error，可是明明item[0]和item[1]的类型是int和float
+solution：
+    MySQLdb的字符串格式化不是标准的python的字符串格式化,应当一直使用%s用于字符串格式化
+    http://stackoverflow.com/questions/5785154/python-mysqldb-issues
+    
