@@ -17,3 +17,17 @@ solution:
     response = urllib2.urlopen(req)
     the_page = response.read()
     
+-----------------------------------------------
+time:  2013/4/9
+problem:
+    int("1.")出现value error
+solution:
+    这是因为python做int的转换时，一定要str里面只含数字，只要先做float，再做int转换就行了
+
+-----------------------------------------------
+time:  2013/4/9
+problem:
+    str<----->unicode
+solution:
+    str---->unicode:  str.decode()
+    unicode---->str:  unicode.encode()
