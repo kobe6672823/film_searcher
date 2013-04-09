@@ -7,8 +7,8 @@ def store_ranklist(list):
     cursor = conn.cursor()
     
     for item in list:
-        sql = "insert into imdb_info(imdb_num, rank, rating, title, votes) values(%s,%s,%s,%s,%s)"
-        param = (item[4], item[0], item[1], item[2], item[3])
+        sql = "insert into imdb_info(imdb_num, rank, rating, title, votes, douban_id) values(%s,%s,%s,%s,%s,%s)"
+        param = (item[4], item[0], item[1], item[2], item[3], 'null')#douban_id need to be changed after search douban
         cursor.execute(sql, param)
     #end of for
 
