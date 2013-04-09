@@ -1,0 +1,19 @@
+-----------------------------------------------
+time:  2013/4/8
+problem:
+    用python中的urllib去获取imdb top250这个页面的时候，返回403
+solution:
+    这是因为这个库获取网页默认的user-agent是Python-urllib/x.x，服务器那边一看就知道你是爬虫，肯定不让过啊，改掉post的头就行了
+
+    url = 'http://www.imdb.com/chart/top'
+    user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
+    values = {'name' : 'Michael Foord',
+              'location' : 'Northampton',
+              'language' : 'Python' }
+    headers = { 'User-Agent' : user_agent }
+
+    data = urllib.urlencode(values)
+    req = urllib2.Request(url, data, headers)
+    response = urllib2.urlopen(req)
+    the_page = response.read()
+    
