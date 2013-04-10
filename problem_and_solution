@@ -42,4 +42,19 @@ problem:
 solution：
     MySQLdb的字符串格式化不是标准的python的字符串格式化,应当一直使用%s用于字符串格式化
     http://stackoverflow.com/questions/5785154/python-mysqldb-issues
+
+-----------------------------------------------
+time:  2013/4/10
+problem:
+    豆瓣的api使用次数是有限制的，一天100次？？差不多，超过了之后就查询不了内容了
+solution：
+    改IP地址！可是因为ip地址是DHCP动态分配的，MAC地址不变的情况下，一般DHCP分配到的IP地址是很固定的，所以需要改MAC地址，这样就能分配到新的IP地址了，如下命令可以改MAC地址：
+    关闭网卡：/sbin/ifconfig eth0 down
+    改MAC地址：/sbin/ifconfig eth0 hw ether 00:AA:BB:CC:DD:EE
+    启动网卡：/sbin/ifconfig eth0 up
     
+-----------------------------------------------
+time:  2013/4/10
+note:
+    操作数据库是，要加上conn.commit()才能提交事物，才能让数据库发生改变
+
