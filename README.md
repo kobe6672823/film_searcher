@@ -28,3 +28,7 @@ http://developers.douban.com/wiki/?title=movie_v2#get_imdb_movie
 5. 开发过程中注重代码规范，可以随意百度Google，谢绝抄袭
 
 6. 提交时需要提供源代码，存储结构说明（数据库结构或文件说明）
+
+
+
+完成后总结：不难，只是刚学PYTHON，练一下手，注意一下字符集这些东西就好
