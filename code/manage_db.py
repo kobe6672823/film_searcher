@@ -102,3 +102,103 @@ def get_douban_info():
 
     print "succeed in getting douban info"
 #end of def
+
+def print_douban_info(result):
+    "print the douban_info store in the list: result"
+
+    details = '''rating_average: %.1f
+                 douban_site: %s
+                 year: %s
+                 image_large: %s
+                 alt: %s
+                 douban_id: %s
+                 title: %s
+                 genres: %s
+                 countries: %s
+                 casts: %s
+                 original_title: %s
+                 summary: %s
+                 subtype: %s
+                 directors: %s''' % \
+                 (result[0], result[1].encode('utf-8'), result[2].encode('utf-8'),\
+                 result[3].encode('utf-8'), result[4].encode('utf-8'), result[5].encode('utf-8'),\
+                 result[6].encode('utf-8'), result[7].encode('utf-8'), result[8].encode('utf-8'),\
+                 result[9].encode('utf-8'),result[10].encode('utf-8'),result[11].encode('utf-8'),\
+                 result[12].encode('utf-8'), result[13].encode('utf-8'))
+    print details
+#end of def
+
+def search_film():
+    "a module for user to search film in db"
+
+    help_info = '''----------------------------------------
+                   options:
+                   1: search a film by imdb_num
+                   2: search a film by douban_id
+                   3: search a film by film_name
+                   q: quit
+                   h: print the help info
+                   ----------------------------------------
+                   your choice: '''
+
+    choice = raw_input(help_info)
+
+    conn=MySQLdb.connect(host="localhost",user="root",passwd="",db="film_searcher_db",charset="utf8")
+    cursor = conn.cursor()
+
+    while (choice != 'q'):
+        if (choice == '1'):
+            input_num = raw_input('please input the imdb_num:')
+            sql = 'select * from imdb_info where imdb_num = "%s"' % (input_num)
+            result_num = cursor.execute(sql)
+            if (result_num == 0):
+                print 'no such film!'
+            else:
+                result = cursor.fetchone()
+                print "title: %s\trank: %d\trating: %.2f\tvotes: %s\tdouban_id: %s" % (result[3], result[1], result[2], result[4], result[5])
+                need_detail = raw_input('need detail info? (y/n): ')
+                if (need_detail == 'y'):
+                    sql = 'select * from douban_info where douban_id = "%s"' % (result[5])
+                    result_num = cursor.execute(sql)
+                    if (result_num == 0):
+                        print 'no details!'
+                    else:
+                        result = cursor.fetchone()
+                        print_douban_info(result)
+                    #end of if
+                #end of if
+            #end of if
+        elif (choice == '2'):
+            input_num = raw_input('please input the douban_id:')
+            sql = 'select * from douban_info where douban_id = "%s"' % (input_num)
+            result_num = cursor.execute(sql)
+            if (result_num == 0):
+                print 'no such film!'
+            else:
+                result = cursor.fetchone()
+                print_douban_info(result)
+            #end of if
+        elif (choice == '3'):
+            film_name = raw_input('please input the film_name:')
+            film_name_utf8 = film_name.decode('utf-8')
+            sql = 'select * from douban_info where title = "%s"' % (film_name_utf8)
+            result_num = cursor.execute(sql)
+            if (result_num == 0):
+                print 'no such film!'
+            else:
+                result = cursor.fetchone()
+                print_douban_info(result)
+            #end of if
+        elif (choice == 'h'):
+            choice = raw_input(help_info)
+            continue
+        elif (choice == 'q'):
+            continue
+        else:
+            print 'incorrect input! tyr again!'
+            choice = raw_input(help_info)
+            continue
+        #end of if
+
+        choice = raw_input('yours choice: ')
+    #end of while
